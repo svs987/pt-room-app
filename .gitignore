@@ -8,6 +8,8 @@ npm-debug.*
 *.mobileprovision
 *.orig.*
 web-build/
+.gitignore
+pt-room-app-2.code-workspace
 
 # macOS
 .DS_Store
