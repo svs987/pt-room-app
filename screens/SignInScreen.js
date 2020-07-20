@@ -14,7 +14,11 @@ const SignInScreen = ({ navigation }) => {
         signIn(email, password)
             .then((r) => {
                 console.log(r);
-                dispatch({ type: 'SIGN_IN', token: r.signInUserSession.accessToken.jwtToken });
+                dispatch({
+                    type: 'SIGN_IN',
+                    token: r.signInUserSession.accessToken.jwtToken,
+                    userName: r.username
+                });
             })
             .catch((e) => {
                 console.log(e);
@@ -24,43 +28,46 @@ const SignInScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Formik
-                initialValues={{ email: '' }}
-                onSubmit={(values) => signInUser(values)}
-            >
-                {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <>
-                        <TextInput
-                            placeholder="Email"
-                            value={values.email}
-                            onChangeText={handleChange('email')}
-                            onBlur={handleBlur('email')}
-                            keyboardType="email-address"
-                            textContentType="emailAddress"
-                            autoCapitalize="none"
-                            autoCompleteType="email"
-                        />
-                        <TextInput
-                            placeholder="Password"
-                            value={values.password}
-                            onChangeText={handleChange('password')}
-                            onBlur={handleBlur('password')}
-                            secureTextEntry
-                            keyboardType="default"
-                            textContentType="password"
-                            autoCapitalize="none"
-                            autoCompleteType="password"
-                        />
-                        <Button
-                            loading={signInLoading}
-                            disabled={signInLoading}
-                            type="outline"
-                            title="SIGN IN"
-                            onPress={handleSubmit}
-                        />
-                    </>
-                )}
-            </Formik>
+            <Text style={styles.text}>Welcome to PT Lounge. Sign In or Sign up to find a coach to design your perfect training plan.</Text>
+            <View style={styles.body}>
+                    <Formik
+                    initialValues={{ email: '' }}
+                    onSubmit={(values) => signInUser(values)}
+                >
+                    {({ handleChange, handleBlur, handleSubmit, values }) => (
+                        <>
+                            <TextInput style={styles.inputbox}
+                                placeholder="Email"
+                                value={values.email}
+                                onChangeText={handleChange('email')}
+                                onBlur={handleBlur('email')}
+                                keyboardType="email-address"
+                                textContentType="emailAddress"
+                                autoCapitalize="none"
+                                autoCompleteType="email"
+                            />
+                            <TextInput style={styles.inputbox}
+                                placeholder="Password"
+                                value={values.password}
+                                onChangeText={handleChange('password')}
+                                onBlur={handleBlur('password')}
+                                secureTextEntry
+                                keyboardType="default"
+                                textContentType="password"
+                                autoCapitalize="none"
+                                autoCompleteType="password"
+                            />
+                            <Button
+                                loading={signInLoading}
+                                disabled={signInLoading}
+                                type="outline"
+                                title="Sign in"
+                                onPress={handleSubmit}
+                            />
+                        </>
+                    )}
+                </Formik>
+            </View>
             <View
                 style={{
                     flexDirection: 'row',
@@ -69,38 +76,40 @@ const SignInScreen = ({ navigation }) => {
                     alignItems: 'center'
                 }}
             >
-                <Text style={{ color: '#CDD2D6' }}>Not registered?</Text>
-                <TouchableOpacity
-                    style={{ marginLeft: 4 }}
+
+                <Text style={styles.text}>Not registered?</Text>
+                <Button
+
                     onPress={() => navigation.navigate('SignUp')}
+                    title='Sign up!'
                 >
-                    <Text>Sign up!</Text>
-                </TouchableOpacity>
+
+                </Button>
             </View>
         </View>
     );
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
+    container: {
+        flex: 1,
         paddingHorizontal: 20,
+    },
+    body: {
+        flex: 1,
         paddingTop: 100,
-	},
-	body: {
-		flex: 1,
-		paddingTop: 100,
-		paddingHorizontal: 20,
+        paddingHorizontal: 20,
 
-	},
-	inputbox: {
-		height: 40,
-		borderColor: 'gray',
-		borderWidth: 1
-	},
-	text: {
-		paddingVertical: 5,
-	},
+    },
+    inputbox: {
+        borderColor: 'gray',
+        borderWidth: 1,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+    },
+    text: {
+        paddingVertical: 5,
+    },
 });
 
 export default SignInScreen;

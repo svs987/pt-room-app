@@ -9,20 +9,35 @@ import SignUpScreen from '../screens/SignUpScreen';
 const Stack = createStackNavigator();
 
 const AuthNavigator = ({ isSignout }) => (
-    <Stack.Navigator initialRouteName="SignIn" headerMode="none">
+    <Stack.Navigator initialRouteName="SignIn">
         <Stack.Screen
             name="SignIn"
             component={SignInScreen}
             options={{
-                title: 'Sign in',
-                animationTypeForReplace: isSignout ? 'pop' : 'push'
+                title: 'Sign In',
+                animationTypeForReplace: isSignout ? 'pop' : 'push',
+                headerStyle: {
+                    backgroundColor: '#a8dadc',
+                },
+                headerTintColor: '#1d3557',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
             }}
         />
         <Stack.Screen
             name="SignUp"
             component={SignUpScreen}
             options={{
-                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS
+                title: 'Sign Up',
+                cardStyleInterpolator: CardStyleInterpolators.forHorizontalIOS,
+                headerStyle: {
+                    backgroundColor: '#a8dadc',
+                },
+                headerTintColor: '#1d3557',
+                headerTitleStyle: {
+                    fontWeight: 'bold',
+                },
             }}
         />
     </Stack.Navigator>

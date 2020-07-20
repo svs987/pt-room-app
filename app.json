@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "pt-room-app-2",
-    "slug": "pt-room-app-2",
+    "name": "PT Room",
+    "slug": "pt-room",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -21,6 +21,7 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "description": "Connects lifters with coaches"
   }
 }

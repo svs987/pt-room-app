@@ -43,9 +43,11 @@ const SignUpScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
+            <Text style={styles.text}>Welcome to PT Lounge. Sign In or Sign up to find a coach to design your perfect training plan.</Text>
             {!signed && (
                 <View style={styles.body}>
-                    <TextInput
+                    <TextInput 
+                        style={styles.inputbox}
                         placeholder="Email"
                         value={email}
                         onChangeText={(value) => setEmail(value)}
@@ -55,6 +57,7 @@ const SignUpScreen = ({ navigation }) => {
                         autoCompleteType="email"
                     />
                     <TextInput
+                        style={styles.inputbox}
                         placeholder="Password"
                         value={password}
                         onChangeText={(value) => setPassword(value)}
@@ -68,7 +71,7 @@ const SignUpScreen = ({ navigation }) => {
                         loading={signUpLoading}
                         disabled={signUpLoading}
                         type="outline"
-                        title="SIGN UP"
+                        title="Sign Up"
                         onPress={signUpUser}
                     />
                 </View>
@@ -76,6 +79,7 @@ const SignUpScreen = ({ navigation }) => {
             {signed && (
                 <View style={styles.body}>
                     <TextInput
+                        style={styles.inputbox}
                         placeholder="Verification code"
                         value={code}
                         onChangeText={(value) => setCode(value)}
@@ -99,13 +103,14 @@ const SignUpScreen = ({ navigation }) => {
                     alignItems: 'center'
                 }}
             >
-                <Text style={{ color: '#CDD2D6' }}>Already a member?</Text>
-                <TouchableOpacity
+                <Text style={styles.text}>Already a member?</Text>
+                <Button
                     style={{ marginLeft: 4 }}
                     onPress={() => navigation.navigate('SignIn')}
+                    title = 'Sign in!'
                 >
-                    <Text>Sign in!</Text>
-                </TouchableOpacity>
+                    
+                </Button>
             </View>
         </View>
     );

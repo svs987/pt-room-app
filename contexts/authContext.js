@@ -8,7 +8,8 @@ function AuthProvider({ children }) {
     const [state, dispatch] = React.useReducer(authReducer, {
         isLoading: true,
         isSignout: false,
-        userToken: null
+        userToken: null,
+        userName: null
     });
 
     return (
