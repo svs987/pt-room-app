@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Text, TouchableOpacity, View, TextInput, Button, StyleSheet } from 'react-native';
 import { signIn, signUp, confirmSignUp } from '../services/authService';
 import { useAuthDispatch } from '../contexts/authContext';
+import SignUpScreenRenderer, { signUpScreenRenderer } from './renderers/SignUpScreenRenderer';
 
 const SignUpScreen = ({ navigation }) => {
     const dispatch = useAuthDispatch();
@@ -31,8 +32,14 @@ const SignUpScreen = ({ navigation }) => {
         confirmSignUp(email, code)
             .then(() => {
                 setVerifyLoading(false);
-                signIn(email, password).then(() =>
-                    dispatch({ type: 'SIGN_IN', token: 'dummy-auth-token' })
+                signIn(email, password).then((r) => {
+                    console.log(r);
+                    dispatch({
+                        type: 'SIGN_IN',
+                        token: r.signInUserSession.accessToken.jwtToken,
+                        userName: r.username
+                    })
+                }
                 );
             })
             .catch((err) => {
@@ -42,99 +49,43 @@ const SignUpScreen = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.text}>Welcome to PT Lounge. Sign In or Sign up to find a coach to design your perfect training plan.</Text>
-            {!signed && (
-                <View style={styles.body}>
-                    <TextInput 
-                        style={styles.inputbox}
-                        placeholder="Email"
-                        value={email}
-                        onChangeText={(value) => setEmail(value)}
-                        keyboardType="email-address"
-                        textContentType="emailAddress"
-                        autoCapitalize="none"
-                        autoCompleteType="email"
-                    />
-                    <TextInput
-                        style={styles.inputbox}
-                        placeholder="Password"
-                        value={password}
-                        onChangeText={(value) => setPassword(value)}
-                        secureTextEntry
-                        keyboardType="default"
-                        textContentType="password"
-                        autoCapitalize="none"
-                        autoCompleteType="password"
-                    />
-                    <Button
-                        loading={signUpLoading}
-                        disabled={signUpLoading}
-                        type="outline"
-                        title="Sign Up"
-                        onPress={signUpUser}
-                    />
-                </View>
-            )}
-            {signed && (
-                <View style={styles.body}>
-                    <TextInput
-                        style={styles.inputbox}
-                        placeholder="Verification code"
-                        value={code}
-                        onChangeText={(value) => setCode(value)}
-                        keyboardType="default"
-                        autoCapitalize="none"
-                    />
-                    <Button
-                        loading={verifyLoading}
-                        disabled={verifyLoading}
-                        type="outline"
-                        title="Verify"
-                        onPress={confirm}
-                    />
-                </View>
-            )}
-            <View
-                style={{
-                    flexDirection: 'row',
-                    marginVertical: 18,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}
-            >
-                <Text style={styles.text}>Already a member?</Text>
-                <Button
-                    style={{ marginLeft: 4 }}
-                    onPress={() => navigation.navigate('SignIn')}
-                    title = 'Sign in!'
-                >
-                    
-                </Button>
-            </View>
-        </View>
+        <SignUpScreenRenderer
+            signed={signed}
+            confirm={confirm}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+            signUpLoading={signUpLoading}
+            signUpUser={signUpUser}
+            code={code}
+            setCode={setCode}
+            verifyLoading={verifyLoading}
+            navigation={navigation}
+        />
+
     );
 };
 
 const styles = StyleSheet.create({
-	container: {
-		flex: 1,
-		paddingHorizontal: 20,
-	},
-	body: {
-		flex: 1,
-		paddingTop: 100,
-		paddingHorizontal: 20,
+    container: {
+        flex: 1,
+        paddingHorizontal: 20,
+    },
+    body: {
+        flex: 1,
+        paddingTop: 100,
+        paddingHorizontal: 20,
 
-	},
-	inputbox: {
-		height: 40,
-		borderColor: 'gray',
-		borderWidth: 1
-	},
-	text: {
-		paddingVertical: 5,
-	},
+    },
+    inputbox: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1
+    },
+    text: {
+        paddingVertical: 5,
+    },
 });
 
 
