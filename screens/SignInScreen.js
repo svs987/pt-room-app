@@ -2,10 +2,11 @@ import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, TextInput, Input, Button, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
 import { signIn } from '../services/authService';
-import { useAuthDispatch } from '../contexts/authContext';
+import { useAuthDispatch, useAuthState } from '../contexts/authContext';
 
 const SignInScreen = ({ navigation }) => {
     const dispatch = useAuthDispatch();
+    const authContext = useAuthState();
     const [signInLoading, setSignInLoading] = useState(false);
 
     const signInUser = async (values) => {
@@ -25,6 +26,14 @@ const SignInScreen = ({ navigation }) => {
             })
             .finally(() => setSignInLoading(false));
     };
+
+    const navigateToSignUp = () => {
+        if (authContext.isVerifying) {
+            navigation.navigate('Verify');
+        } else {
+            navigation.navigate('SignUp');
+        }
+    }
 
     return (
         <View style={styles.container}>
@@ -80,7 +89,7 @@ const SignInScreen = ({ navigation }) => {
                 <Text style={styles.text}>Not registered?</Text>
                 <Button
 
-                    onPress={() => navigation.navigate('SignUp')}
+                    onPress={navigateToSignUp}
                     title='Sign up!'
                 >
 

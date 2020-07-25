@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View, TextInput, Button, StyleSheet } from 'react-native';
 import { signIn, signUp, confirmSignUp } from '../services/authService';
 import { useAuthDispatch } from '../contexts/authContext';
-import SignUpScreenRenderer, { signUpScreenRenderer } from './renderers/SignUpScreenRenderer';
+import SignUpScreenRenderer from './renderers/SignUpScreenRenderer';
+import VerifyScreenRenderer from './renderers/VerifyScreenRenderer';
 
 const SignUpScreen = ({ navigation }) => {
     const dispatch = useAuthDispatch();
@@ -13,6 +13,8 @@ const SignUpScreen = ({ navigation }) => {
     const [verifyLoading, setVerifyLoading] = useState(false);
     const [code, setCode] = useState('');
 
+    console.log('signed: ', signed);
+
     const signUpUser = () => {
         setSignUpLoading(true);
         signUp(email, password)
@@ -20,7 +22,13 @@ const SignUpScreen = ({ navigation }) => {
                 console.log(data);
                 setSigned(true);
                 setSignUpLoading(false);
-            })
+                dispatch({
+                    type: 'VERIFYING',
+                    email: email,
+                    password: password
+                })
+                navigation.navigate('Verify');
+        })
             .catch((err) => {
                 setSignUpLoading(false);
                 console.log(err);
@@ -50,43 +58,18 @@ const SignUpScreen = ({ navigation }) => {
 
     return (
         <SignUpScreenRenderer
-            signed={signed}
-            confirm={confirm}
             email={email}
             setEmail={setEmail}
             password={password}
             setPassword={setPassword}
             signUpLoading={signUpLoading}
             signUpUser={signUpUser}
-            code={code}
-            setCode={setCode}
-            verifyLoading={verifyLoading}
             navigation={navigation}
         />
 
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 20,
-    },
-    body: {
-        flex: 1,
-        paddingTop: 100,
-        paddingHorizontal: 20,
-
-    },
-    inputbox: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-    },
-    text: {
-        paddingVertical: 5,
-    },
-});
 
 
 export default SignUpScreen;

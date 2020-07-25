@@ -1,13 +1,13 @@
 import React  from 'react';
-import { Text, View, TextInput, Button, StyleSheet } from 'react-native';
+import { Text, View, TextInput, Button } from 'react-native';
+import styles from '../../styles';
 
 const SignUpScreenRenderer = (props) => {
  
     return (
         <View style={styles.container}>
-            {!props.signed && (
-                <View style={styles.body}>
-                    <Text style={styles.text}>Welcome to PT Lounge. Sign In or Sign up to find a coach to design your perfect training plan.</Text>
+                <View>
+                    <Text style={styles.text}>Welcome to PT Lounge. Sign up to find a coach to design your perfect training plan.</Text>
                     <TextInput
                         style={styles.inputbox}
                         placeholder="Email"
@@ -37,27 +37,7 @@ const SignUpScreenRenderer = (props) => {
                         onPress={props.signUpUser}
                     />
                 </View>
-            )}
-            {props.signed && (
-                <View style={styles.body}>
-                    <Text style={styles.text}>Nearly done! We've sent you a verification code via e-mail. Please check your e-mail and enter the code in the box</Text>
-                    <TextInput
-                        style={styles.inputbox}
-                        placeholder="Verification code"
-                        value={props.code}
-                        onChangeText={(value) => props.setCode(value)}
-                        keyboardType="default"
-                        autoCapitalize="none"
-                    />
-                    <Button
-                        loading={props.verifyLoading}
-                        disabled={props.verifyLoading}
-                        type="outline"
-                        title="Verify"
-                        onPress={props.confirm}
-                    />
-                </View>
-            )}
+            
             <View
                 style={{
                     flexDirection: 'row',
@@ -78,27 +58,6 @@ const SignUpScreenRenderer = (props) => {
         </View>
     );
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 20,
-    },
-    body: {
-        flex: 1,
-        paddingTop: 100,
-        paddingHorizontal: 20,
-
-    },
-    inputbox: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-    },
-    text: {
-        paddingVertical: 5,
-    },
-});
 
 
 export default SignUpScreenRenderer;

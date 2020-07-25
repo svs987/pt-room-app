@@ -1,12 +1,12 @@
 import React from 'react';
 import renderer from 'react-test-renderer';
 
-import SignUpScreenRenderer from './SignUpScreenRenderer';
+import VerifyScreenRenderer from './VerifyScreenRenderer';
 
 
-it('renders the Signup Screen', () => {
+  it('renders the Verify Screen', () => {
     expect(renderer.create(
-      <SignUpScreenRenderer
+      <VerifyScreenRenderer
         confirm={() =>{}}
         code=""
         email=""
