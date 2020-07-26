@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { signIn, signUp, confirmSignUp } from '../services/authService';
 import { useAuthDispatch } from '../contexts/authContext';
 import SignUpScreenRenderer from './renderers/SignUpScreenRenderer';
-import VerifyScreenRenderer from './renderers/VerifyScreenRenderer';
 
 const SignUpScreen = ({ navigation }) => {
     const dispatch = useAuthDispatch();
@@ -15,17 +14,20 @@ const SignUpScreen = ({ navigation }) => {
 
     console.log('signed: ', signed);
 
-    const signUpUser = () => {
+    const signUpUser = (values) => {
+        console.log('In signUpUser. Values: ', values);
+        setEmail(values.email);
+        setPassword(values.password);
         setSignUpLoading(true);
-        signUp(email, password)
+        signUp(values.email, values.password)
             .then((data) => {
                 console.log(data);
                 setSigned(true);
                 setSignUpLoading(false);
                 dispatch({
                     type: 'VERIFYING',
-                    email: email,
-                    password: password
+                    email: values.email,
+                    password: values.password
                 })
                 navigation.navigate('Verify');
         })

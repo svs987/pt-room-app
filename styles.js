@@ -57,6 +57,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: '#a8dadc',
     padding: 10,
+  },
+  error: {
+    color: 'red',
+    paddingVertical: 5,
+
   }
 });
 

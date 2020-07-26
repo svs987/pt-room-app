@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { Text, View, TouchableOpacity, TextInput, Input, Button, StyleSheet } from 'react-native';
 import { Formik } from 'formik';
+import * as Yup from 'yup';
+
 import { signIn } from '../services/authService';
 import { useAuthDispatch, useAuthState } from '../contexts/authContext';
+import styles from '../styles';
 
 const SignInScreen = ({ navigation }) => {
     const dispatch = useAuthDispatch();
@@ -35,15 +38,25 @@ const SignInScreen = ({ navigation }) => {
         }
     }
 
+    const SignupSchema = Yup.object().shape({
+           password: Yup.string()
+             .required('You need to enter your password'),
+           email: Yup.string()
+             .email('You need to enter a valid email address')
+             .required('You need to enter a valid email address'),
+         });
+         
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Welcome to PT Lounge. Sign In or Sign up to find a coach to design your perfect training plan.</Text>
-            <View style={styles.body}>
+            <View>
                     <Formik
                     initialValues={{ email: '' }}
                     onSubmit={(values) => signInUser(values)}
+                    validationSchema={SignupSchema}
                 >
-                    {({ handleChange, handleBlur, handleSubmit, values }) => (
+                    {({ errors, handleChange, handleBlur, handleSubmit, values }) => (
                         <>
                             <TextInput style={styles.inputbox}
                                 placeholder="Email"
@@ -55,6 +68,7 @@ const SignInScreen = ({ navigation }) => {
                                 autoCapitalize="none"
                                 autoCompleteType="email"
                             />
+                            {errors.email ? <Text style={styles.error}>{errors.email}</Text> : null}
                             <TextInput style={styles.inputbox}
                                 placeholder="Password"
                                 value={values.password}
@@ -66,6 +80,8 @@ const SignInScreen = ({ navigation }) => {
                                 autoCapitalize="none"
                                 autoCompleteType="password"
                             />
+                             {errors.password ? <Text style={styles.error}>{errors.password}</Text> : null}
+
                             <Button
                                 loading={signInLoading}
                                 disabled={signInLoading}
@@ -99,26 +115,5 @@ const SignInScreen = ({ navigation }) => {
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 20,
-    },
-    body: {
-        flex: 1,
-        paddingTop: 100,
-        paddingHorizontal: 20,
-
-    },
-    inputbox: {
-        borderColor: 'gray',
-        borderWidth: 1,
-        paddingVertical: 10,
-        paddingHorizontal: 20,
-    },
-    text: {
-        paddingVertical: 5,
-    },
-});
 
 export default SignInScreen;
