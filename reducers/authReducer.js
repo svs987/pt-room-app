@@ -1,16 +1,17 @@
 export const authReducer = (prevState, action) => {
-    console.log(action);
     switch (action.type) {
         case 'RESTORE_TOKEN':
             return {
                 ...prevState,
                 userToken: action.token,
+                isRequestingNewPassword: false,
                 isLoading: false
             };
         case 'SIGN_IN':
             return {
                 ...prevState,
                 isSignout: false,
+                isRequestingNewPassword: false,
                 userToken: action.token,
                 userName: action.userName,
                 isVerifying: false
@@ -19,6 +20,7 @@ export const authReducer = (prevState, action) => {
             return {
                 ...prevState,
                 isSignout: true,
+                isRequestingNewPassword: false,
                 userToken: null,
                 userName: null,
                 email: null,
@@ -29,12 +31,25 @@ export const authReducer = (prevState, action) => {
             return {
                 ...prevState,
                 isSignout: true,
+                isRequestingNewPassword: false,
                 userToken: null,
                 userName: null,
                 isVerifying: true,
                 email: action.email,
                 password: action.password
             }
+            case 'RESET_PASSWORD':
+                return {
+                    ...prevState,
+                    isSignout: true,
+                    isRequestingNewPassword: true,
+                    userToken: null,
+                    userName: null,
+                    isVerifying: false,
+                    email: action.email,
+                    password: null
+                }
+    
         default:
             return prevState;
     }

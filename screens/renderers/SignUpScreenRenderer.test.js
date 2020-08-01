@@ -13,3 +13,14 @@ it('renders the Signup Screen', () => {
         signUpUser={()=>{}} />
     )).toMatchSnapshot();
   });
+
+  it('renders the Signup Screen with an error', () => {
+    expect(renderer.create(
+      <SignUpScreenRenderer
+        confirm={() =>{}}
+        code=""
+        email=""
+        signUpUser={()=>{}}
+        signUpError="Error!" />
+    )).toMatchSnapshot();
+  });

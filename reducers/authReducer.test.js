@@ -7,6 +7,7 @@ test('sets verifying state', () => {
         password: 'pa55w0rd'
     })).toEqual({
         isVerifying: true,
+        isRequestingNewPassword: false,
         isSignout: true,
         userToken: null,
         userName: null,
@@ -23,6 +24,7 @@ test('sets sign in state', () => {
     })).toEqual({
         isVerifying: false,
         isSignout: false,
+        isRequestingNewPassword: false,
         userToken: 'abcde',
         userName: 'userName',
     });
@@ -34,9 +36,25 @@ test('sets sign out state', () => {
     })).toEqual({
         isVerifying: false,
         isSignout: true,
+        isRequestingNewPassword: false,
         userToken: null,
         userName: null,
         email: null,
+        password: null
+    });
+});
+
+test('sets reset password state', () => {
+    expect(authReducer({}, {
+        type: 'RESET_PASSWORD',
+        email: 'a.b@c.com'
+    })).toEqual({
+        isVerifying: false,
+        isSignout: true,
+        isRequestingNewPassword: true,
+        userToken: null,
+        userName: null,
+        email: "a.b@c.com",
         password: null
     });
 });

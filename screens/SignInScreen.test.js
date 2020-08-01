@@ -7,6 +7,10 @@ jest.mock('../contexts/authContext');
 
 it('renders the Sign In Screen', () => {
     expect(renderer.create(
-      <SignInScreen/>
+      <SignInScreen
+        navigation={{
+          navigate: ()=>{},
+
+        }}/>
     )).toMatchSnapshot();
   });

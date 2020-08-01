@@ -1,11 +1,12 @@
 import React  from 'react';
 import { Text, View, TextInput, Button, StyleSheet } from 'react-native';
+import styles from '../../styles';
 
 const VerifyScreenRenderer = (props) => {
  
     return (
         <View style={styles.container}>
-                <View style={styles.body}>
+                <View>
                     <Text style={styles.text}>Nearly done! We've sent you a verification code via e-mail. Please check your e-mail and enter the code in the box</Text>
                     <TextInput
                         style={styles.inputbox}
@@ -15,7 +16,8 @@ const VerifyScreenRenderer = (props) => {
                         keyboardType="default"
                         autoCapitalize="none"
                     />
-                    <Button
+                               {props.verifyError ? <Text style={styles.error}>Could not verify you. Please check code and network connection and try again.</Text> : null}
+                  <Button
                         loading={props.verifyLoading}
                         disabled={props.verifyLoading}
                         type="outline"
@@ -23,6 +25,24 @@ const VerifyScreenRenderer = (props) => {
                         onPress={props.confirm}
                     />
                 </View>
+                <View
+                    style={{
+                        marginVertical: 18,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
+                >
+                    <Text style={styles.text}>Not received your code? Check your spam folder or press "Resend code" to get a new code</Text>
+                    <Button
+                        style={{ marginLeft: 4 }}
+                        onPress={props.handleResendCode}
+                        title='Resend code'
+                    >
+
+                    </Button>
+
+                </View>
+
             
             <View
                 style={{
@@ -45,26 +65,6 @@ const VerifyScreenRenderer = (props) => {
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 20,
-    },
-    body: {
-        flex: 1,
-        paddingTop: 100,
-        paddingHorizontal: 20,
-
-    },
-    inputbox: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-    },
-    text: {
-        paddingVertical: 5,
-    },
-});
 
 
 export default VerifyScreenRenderer;

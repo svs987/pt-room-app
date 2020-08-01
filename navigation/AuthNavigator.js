@@ -1,11 +1,12 @@
 import React from 'react';
 import {
     createStackNavigator,
-    CardStyleInterpolators
 } from '@react-navigation/stack';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
 import VerifyScreen from '../screens/VerifyScreen';
+import { ForgottenPasswordScreen } from '../screens/ForgottenPasswordScreen';
+import {ChangePasswordScreen} from '../screens/ChangePasswordScreen';
 
 const Stack = createStackNavigator();
 
@@ -44,9 +45,24 @@ const AuthNavigator = ({ isSignout }) => (
                 headerLeft: (props) => {
                     console.log(props);
                 }
-                
+
             }}
         />
+        <Stack.Screen
+            name="ForgottenPassword"
+            component={ForgottenPasswordScreen}
+            options={{
+                title: 'Forgot Password',
+            }}
+        />
+        <Stack.Screen
+            name="ChangePassword"
+            component={ChangePasswordScreen}
+            options={{
+                title: 'Change Password',
+            }}
+        />
+
     </Stack.Navigator>
 );
 

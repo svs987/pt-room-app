@@ -8,14 +8,14 @@ const SignUpScreenRenderer = (props) => {
 
     const SignupSchema = Yup.object().shape({
         password: Yup.string()
-          .min(8, 'Too Short!')
-          .max(50, 'Too Long!')
-          .required('Required'),
+            .min(8, 'Please enter a password that is at least 8 characters long')
+            .max(50, 'Too Long!')
+            .required('Please enter a password that is at least 8 characters long'),
         email: Yup.string()
-          .email('Invalid email')
-          .required('Required'),
-      });
-      
+            .email('Please enter a valid e-mail address')
+            .required('Please enter a valid e-mail address'),
+    });
+
 
 
     return (
@@ -38,7 +38,7 @@ const SignUpScreenRenderer = (props) => {
                                 keyboardType="email-address"
                                 textContentType="emailAddress"
                                 autoCapitalize="none"
-                                autoCompleteType="email"                   />
+                                autoCompleteType="email" />
                             {errors.email && touched.email ? <Text style={styles.error}>{errors.email}</Text> : null}
                             <TextInput
                                 style={styles.inputbox}
@@ -51,8 +51,9 @@ const SignUpScreenRenderer = (props) => {
                                 textContentType="password"
                                 autoCapitalize="none"
                                 autoCompleteType="password"
-                           />
-                             {errors.password && touched.password ? <Text style={styles.error}>{errors.password}</Text> : null}
+                            />
+                            {errors.password && touched.password ? <Text style={styles.error}>{errors.password}</Text> : null}
+                            {props.signUpError ? <Text style={styles.error}>{props.signUpError}</Text> : null}
                             <Button
                                 loading={props.signUpLoading}
                                 disabled={props.signUpLoading}
@@ -63,26 +64,26 @@ const SignUpScreenRenderer = (props) => {
                         </>
                     )}
                 </Formik>
-            </View>
+                </View>
 
-            <View
-                style={{
-                    flexDirection: 'row',
-                    marginVertical: 18,
-                    justifyContent: 'center',
-                    alignItems: 'center'
-                }}
-            >
-                <Text style={styles.text}>Already a member?</Text>
-                <Button
-                    style={{ marginLeft: 4 }}
-                    onPress={() => props.navigation.navigate('SignIn')}
-                    title='Sign in!'
+                <View
+                    style={{
+                        flexDirection: 'row',
+                        marginVertical: 18,
+                        justifyContent: 'center',
+                        alignItems: 'center'
+                    }}
                 >
+                    <Text style={styles.text}>Already a member?</Text>
+                    <Button
+                        style={{ marginLeft: 4 }}
+                        onPress={() => props.navigation.navigate('SignIn')}
+                        title='Sign in!'
+                    >
 
-                </Button>
+                    </Button>
+                </View>
             </View>
-        </View>
     );
 };
 

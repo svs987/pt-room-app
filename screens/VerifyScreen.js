@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TouchableOpacity, View, TextInput, Button, StyleSheet } from 'react-native';
-import { signIn, signUp, confirmSignUp } from '../services/authService';
+import { signIn, confirmSignUp } from '../services/authService';
 import { useAuthDispatch, useAuthState } from '../contexts/authContext';
 import VerifyScreenRenderer from './renderers/VerifyScreenRenderer';
 
@@ -8,10 +7,12 @@ const SignUpScreen = ({ navigation }) => {
     const dispatch = useAuthDispatch();
     const context = useAuthState();
     const [verifyLoading, setVerifyLoading] = useState(false);
+    const [verifyError, setVerifyError] = useState(false);
     const [code, setCode] = useState('');
 
     const confirm = () => {
         setVerifyLoading(true);
+        setVerifyError(false);
         confirmSignUp(context.email, code)
             .then(() => {
                 setVerifyLoading(false);
@@ -27,9 +28,14 @@ const SignUpScreen = ({ navigation }) => {
             })
             .catch((err) => {
                 setVerifyLoading(false);
+                setVerifyError(true);
                 console.log(err);
             });
     };
+
+    const handleResendCode = () => {
+
+    }
 
     return (
 
@@ -39,6 +45,8 @@ const SignUpScreen = ({ navigation }) => {
             setCode={setCode}
             verifyLoading={verifyLoading}
             navigation={navigation}
+            verifyError={verifyError}
+            handleResendCode={handleResendCode}
         />
 
 
@@ -46,26 +54,6 @@ const SignUpScreen = ({ navigation }) => {
     );
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        paddingHorizontal: 20,
-    },
-    body: {
-        flex: 1,
-        paddingTop: 100,
-        paddingHorizontal: 20,
-
-    },
-    inputbox: {
-        height: 40,
-        borderColor: 'gray',
-        borderWidth: 1
-    },
-    text: {
-        paddingVertical: 5,
-    },
-});
 
 
 export default SignUpScreen;

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, TextInput, Input, Button, StyleSheet } from 'react-native';
+import { Text, View, TextInput, Button } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -11,10 +11,14 @@ const SignInScreen = ({ navigation }) => {
     const dispatch = useAuthDispatch();
     const authContext = useAuthState();
     const [signInLoading, setSignInLoading] = useState(false);
+    const [signInError, setSignInError] = useState(false);
+
+    console.log(navigation);
 
     const signInUser = async (values) => {
         const { email, password } = values;
         setSignInLoading(true);
+        setSignInError(false);
         signIn(email, password)
             .then((r) => {
                 console.log(r);
@@ -26,6 +30,7 @@ const SignInScreen = ({ navigation }) => {
             })
             .catch((e) => {
                 console.log(e);
+                setSignInError(true);
             })
             .finally(() => setSignInLoading(false));
     };
@@ -39,19 +44,19 @@ const SignInScreen = ({ navigation }) => {
     }
 
     const SignupSchema = Yup.object().shape({
-           password: Yup.string()
-             .required('You need to enter your password'),
-           email: Yup.string()
-             .email('You need to enter a valid email address')
-             .required('You need to enter a valid email address'),
-         });
-         
+        password: Yup.string()
+            .required('You need to enter your password'),
+        email: Yup.string()
+            .email('You need to enter the email address that you used to sign up')
+            .required('You need to enter the email address that you used to sign up'),
+    });
+
 
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Welcome to PT Lounge. Sign In or Sign up to find a coach to design your perfect training plan.</Text>
             <View>
-                    <Formik
+                <Formik
                     initialValues={{ email: '' }}
                     onSubmit={(values) => signInUser(values)}
                     validationSchema={SignupSchema}
@@ -80,7 +85,8 @@ const SignInScreen = ({ navigation }) => {
                                 autoCapitalize="none"
                                 autoCompleteType="password"
                             />
-                             {errors.password ? <Text style={styles.error}>{errors.password}</Text> : null}
+                            {errors.password ? <Text style={styles.error}>{errors.password}</Text> : null}
+                            {signInError ? <Text style={styles.error}>Could not sign you in. Make sure you have a good network connection and check your email and password.</Text> : null}
 
                             <Button
                                 loading={signInLoading}
@@ -92,6 +98,12 @@ const SignInScreen = ({ navigation }) => {
                         </>
                     )}
                 </Formik>
+                <Button
+                    onPress={()=>{
+                        navigation.navigate('ForgottenPassword');
+                    }}
+                    title='Forgot password?'
+                ></Button>
             </View>
             <View
                 style={{

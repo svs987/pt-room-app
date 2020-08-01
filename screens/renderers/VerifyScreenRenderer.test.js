@@ -10,6 +10,20 @@ import VerifyScreenRenderer from './VerifyScreenRenderer';
         confirm={() =>{}}
         code=""
         email=""
-        signUpUser={()=>{}} />
+        signUpUser={()=>{}}
+        handleResendCode={()=>{}}
+        verifyError={false} />
+    )).toMatchSnapshot();
+  });
+
+  it('renders an error on the Verify Screen', () => {
+    expect(renderer.create(
+      <VerifyScreenRenderer
+        confirm={() =>{}}
+        code=""
+        email=""
+        signUpUser={()=>{}}
+        handleResendCode={()=>{}}
+        verifyError={true} />
     )).toMatchSnapshot();
   });

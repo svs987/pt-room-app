@@ -51,4 +51,19 @@ const checkAuth = async () => {
     }
 };
 
-export { signIn, signOut, checkAuth, signUp, confirmSignUp };
+const forgotPassword = async (email) => {
+    try {
+        const response = await Auth.forgotPassword(email);
+        return response;
+      } catch (error) {
+        throw new Error(error.message);
+      }
+    }
+
+    const forgotPasswordSubmit = () => {
+        return;
+    }
+    
+
+
+export { signIn, signOut, checkAuth, signUp, confirmSignUp, forgotPassword, forgotPasswordSubmit };

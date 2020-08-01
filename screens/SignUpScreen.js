@@ -9,16 +9,15 @@ const SignUpScreen = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [signed, setSigned] = useState(false);
     const [signUpLoading, setSignUpLoading] = useState(false);
-    const [verifyLoading, setVerifyLoading] = useState(false);
-    const [code, setCode] = useState('');
+    const [signUpError, setSignUpError] = useState(null);
 
     console.log('signed: ', signed);
 
     const signUpUser = (values) => {
-        console.log('In signUpUser. Values: ', values);
         setEmail(values.email);
         setPassword(values.password);
         setSignUpLoading(true);
+        setSignUpError(null);
         signUp(values.email, values.password)
             .then((data) => {
                 console.log(data);
@@ -33,27 +32,7 @@ const SignUpScreen = ({ navigation }) => {
         })
             .catch((err) => {
                 setSignUpLoading(false);
-                console.log(err);
-            });
-    };
-
-    const confirm = () => {
-        setVerifyLoading(true);
-        confirmSignUp(email, code)
-            .then(() => {
-                setVerifyLoading(false);
-                signIn(email, password).then((r) => {
-                    console.log(r);
-                    dispatch({
-                        type: 'SIGN_IN',
-                        token: r.signInUserSession.accessToken.jwtToken,
-                        userName: r.username
-                    })
-                }
-                );
-            })
-            .catch((err) => {
-                setVerifyLoading(false);
+                setSignUpError(err.message);
                 console.log(err);
             });
     };
@@ -67,6 +46,7 @@ const SignUpScreen = ({ navigation }) => {
             signUpLoading={signUpLoading}
             signUpUser={signUpUser}
             navigation={navigation}
+            signUpError={signUpError}
         />
 
     );
