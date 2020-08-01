@@ -9,6 +9,7 @@ npm-debug.*
 *.orig.*
 *.snap
 web-build/
+coverage/
 .gitignore
 pt-room-app-2.code-workspace
 app.config.js
