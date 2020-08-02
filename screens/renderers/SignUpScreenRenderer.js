@@ -29,17 +29,19 @@ const SignUpScreenRenderer = (props) => {
                     {({ errors, touched, handleChange, handleBlur, handleSubmit, values }) => (
                         <>
                             <Text style={styles.text}>Welcome to PT Lounge. Sign up to find a coach to design your perfect training plan.</Text>
-                            <TextInput
-                                style={styles.inputbox}
-                                placeholder="Email"
-                                value={values.email}
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                keyboardType="email-address"
-                                textContentType="emailAddress"
-                                autoCapitalize="none"
-                                autoCompleteType="email" />
-                            {errors.email && touched.email ? <Text style={styles.error}>{errors.email}</Text> : null}
+                            <View style={styles.paragraph}>
+                                <TextInput
+                                    style={styles.inputbox}
+                                    placeholder="Email"
+                                    value={values.email}
+                                    onChangeText={handleChange('email')}
+                                    onBlur={handleBlur('email')}
+                                    keyboardType="email-address"
+                                    textContentType="emailAddress"
+                                    autoCapitalize="none"
+                                    autoCompleteType="email" />
+                                {errors.email && touched.email ? <Text style={styles.error}>{errors.email}</Text> : null}
+                            </View>
                             <TextInput
                                 style={styles.inputbox}
                                 placeholder="Password"
@@ -54,6 +56,7 @@ const SignUpScreenRenderer = (props) => {
                             />
                             {errors.password && touched.password ? <Text style={styles.error}>{errors.password}</Text> : null}
                             {props.signUpError ? <Text style={styles.error}>{props.signUpError}</Text> : null}
+                            <View style={styles.paragraph}>
                             <Button
                                 loading={props.signUpLoading}
                                 disabled={props.signUpLoading}
@@ -61,29 +64,30 @@ const SignUpScreenRenderer = (props) => {
                                 title="Sign Up"
                                 onPress={handleSubmit}
                             />
+                            </View>
                         </>
                     )}
                 </Formik>
-                </View>
-
-                <View
-                    style={{
-                        flexDirection: 'row',
-                        marginVertical: 18,
-                        justifyContent: 'center',
-                        alignItems: 'center'
-                    }}
-                >
-                    <Text style={styles.text}>Already a member?</Text>
-                    <Button
-                        style={{ marginLeft: 4 }}
-                        onPress={() => props.navigation.navigate('SignIn')}
-                        title='Sign in!'
-                    >
-
-                    </Button>
-                </View>
             </View>
+
+            <View
+                style={{
+                    flexDirection: 'row',
+                    marginVertical: 18,
+                    justifyContent: 'center',
+                    alignItems: 'center'
+                }}
+            >
+                <Text style={styles.text}>Already a member?  </Text>
+                <Button
+                    style={{ marginLeft: 4 }}
+                    onPress={() => props.navigation.navigate('SignIn')}
+                    title='Sign in!'
+                >
+
+                </Button>
+            </View>
+        </View>
     );
 };
 

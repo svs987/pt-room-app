@@ -17,13 +17,15 @@ const ForgottenPasswordScreenRenderer = (props) => {
                     autoCapitalize="none"
                 />
                 {props.emailError ? <Text style={styles.error}>{props.emailError}</Text> : null}
-                <Button
-                    loading={props.forgottenPasswordLoading}
-                    disabled={props.forgottenPasswordLoading}
-                    type="outline"
-                    title="Send Code"
-                    onPress={props.handleSubmit}
-                />
+                <View style={styles.paragraph} >
+                    <Button
+                        loading={props.forgottenPasswordLoading}
+                        disabled={props.forgottenPasswordLoading}
+                        type="outline"
+                        title="Send Code"
+                        onPress={props.handleSubmit}
+                    />
+                </View>
             </View>
 
 
@@ -35,7 +37,7 @@ const ForgottenPasswordScreenRenderer = (props) => {
                     alignItems: 'center'
                 }}
             >
-                <Text style={styles.text}>Remembered your password?</Text>
+                <Text style={styles.text}>Remembered your password?  </Text>
                 <Button
                     style={{ marginLeft: 4 }}
                     onPress={() => props.navigation.navigate('SignIn')}

@@ -8,6 +8,7 @@ const ChangePasswordScreenRenderer = (props) => {
         <View style={styles.container}>
             <View>
                 <Text style={styles.text}>Enter the code that we sent you and a new password</Text>
+                <View style={styles.paragraph}>
                 <TextInput
                     style={styles.inputbox}
                     placeholder="Code"
@@ -16,6 +17,7 @@ const ChangePasswordScreenRenderer = (props) => {
                     keyboardType="default"
                     autoCapitalize="none"
                 />
+                </View>
                 <TextInput
                     style={styles.inputbox}
                     placeholder="Password"
@@ -27,6 +29,8 @@ const ChangePasswordScreenRenderer = (props) => {
                     secureTextEntry={true}
                 />
                 {props.changePasswordError ? <Text style={styles.error}>{props.changePasswordError}</Text> : null}
+                <View style={styles.paragraph}>
+
                 <Button
                     loading={props.changePasswordLoading}
                     disabled={props.changePasswordLoading}
@@ -34,6 +38,7 @@ const ChangePasswordScreenRenderer = (props) => {
                     title="Change Password"
                     onPress={props.handleSubmit}
                 />
+                </View>
             </View>
 
 
@@ -45,7 +50,7 @@ const ChangePasswordScreenRenderer = (props) => {
                     alignItems: 'center'
                 }}
             >
-                <Text style={styles.text}>Remembered your password?</Text>
+                <Text style={styles.text}>Remembered your password?  </Text>
                 <Button
                     style={{ marginLeft: 4 }}
                     onPress={() => props.navigation.navigate('SignIn')}

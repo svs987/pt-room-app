@@ -1,10 +1,11 @@
 import React, { useEffect } from 'react';
-import { View, Button, StyleSheet, Text } from 'react-native';
+import { View, Button, Text, ScrollView, SafeAreaView } from 'react-native';
 import { useAuthDispatch, useAuthState } from '../contexts/authContext';
 import { signOut } from '../services/authService';
 import { getTrainingProgramme } from '../services/trainingProgrammeService';
 import { useTrainingProgrammeDispatch, useTrainingProgrammeState } from '../contexts/trainingProgrammeContext';
 import TrainingPlanView from '../components/TrainingPlanView';
+import styles from '../styles';
 
 const HomeScreen = ({ navigation }) => {
   const authDispatch = useAuthDispatch();
@@ -60,10 +61,16 @@ const HomeScreen = ({ navigation }) => {
           </View>
         );
       } else {
-        res = (<View style={styles.container}>
-          <TrainingPlanView/>
-          <Button title="Log Out" onPress={handleSignOut} />
-        </View>
+        res = (
+          <SafeAreaView style={styles.container}>
+          <ScrollView>
+    
+          <TrainingPlanView />
+          <View style={styles.paragraph}>
+            <Button title="Log Out" onPress={handleSignOut} />
+          </View>
+        </ScrollView>
+        </SafeAreaView>
         );
 
       }
@@ -78,28 +85,6 @@ const HomeScreen = ({ navigation }) => {
 
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 20,
-    paddingTop: 100,
-    backgroundColor: '#f1faee',
-  },
-  body: {
-    flex: 1,
-    paddingTop: 100,
-    paddingHorizontal: 20,
-
-  },
-  inputbox: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1
-  },
-  text: {
-    paddingVertical: 5,
-  },
-});
 
 
 export default HomeScreen;

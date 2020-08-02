@@ -49,6 +49,7 @@ const ForgottenPasswordScreen = ({navigation}) => {
             handleSubmit={handleSubmit}
             emailError={forgottenPasswordError}
             forgottenPasswordLoading={forgottenPasswordLoading}
+            navigation={navigation}
         />
     )
 }

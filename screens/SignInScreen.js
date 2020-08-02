@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, View, TextInput, Button } from 'react-native';
+import { Text, View, TextInput, Button, TouchableOpacity } from 'react-native';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 
@@ -63,17 +63,20 @@ const SignInScreen = ({ navigation }) => {
                 >
                     {({ errors, handleChange, handleBlur, handleSubmit, values }) => (
                         <>
-                            <TextInput style={styles.inputbox}
-                                placeholder="Email"
-                                value={values.email}
-                                onChangeText={handleChange('email')}
-                                onBlur={handleBlur('email')}
-                                keyboardType="email-address"
-                                textContentType="emailAddress"
-                                autoCapitalize="none"
-                                autoCompleteType="email"
-                            />
-                            {errors.email ? <Text style={styles.error}>{errors.email}</Text> : null}
+                            <View style={styles.paragraph}>
+                                <TextInput style={styles.inputbox}
+                                    placeholder="Email"
+                                    value={values.email}
+                                    onChangeText={handleChange('email')}
+                                    onBlur={handleBlur('email')}
+                                    keyboardType="email-address"
+                                    textContentType="emailAddress"
+                                    autoCapitalize="none"
+                                    autoCompleteType="email"
+                                />
+                                {errors.email ? <Text style={styles.error}>{errors.email}</Text> : null}
+                            </View>
+
                             <TextInput style={styles.inputbox}
                                 placeholder="Password"
                                 value={values.password}
@@ -87,23 +90,27 @@ const SignInScreen = ({ navigation }) => {
                             />
                             {errors.password ? <Text style={styles.error}>{errors.password}</Text> : null}
                             {signInError ? <Text style={styles.error}>Could not sign you in. Make sure you have a good network connection and check your email and password.</Text> : null}
-
-                            <Button
-                                loading={signInLoading}
-                                disabled={signInLoading}
-                                type="outline"
-                                title="Sign in"
-                                onPress={handleSubmit}
-                            />
+                            <View style={styles.paragraph}>
+                                <Button style={styles.buttonView}
+                                    loading={signInLoading}
+                                    disabled={signInLoading}
+                                    type="outline"
+                                    title="Sign in"
+                                    onPress={handleSubmit}
+                                />
+                            </View>
                         </>
                     )}
                 </Formik>
-                <Button
-                    onPress={()=>{
+                <View style={styles.paragraph}>
+                    <TouchableOpacity onPress={() => {
                         navigation.navigate('ForgottenPassword');
-                    }}
-                    title='Forgot password?'
-                ></Button>
+                    }}>
+                        <Text style={{
+                            color: 'blue',
+                        }}>Forgot password?</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
             <View
                 style={{
@@ -114,7 +121,7 @@ const SignInScreen = ({ navigation }) => {
                 }}
             >
 
-                <Text style={styles.text}>Not registered?</Text>
+                <Text style={styles.text}>Not registered?  </Text>
                 <Button
 
                     onPress={navigateToSignUp}
