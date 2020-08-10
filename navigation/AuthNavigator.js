@@ -4,7 +4,7 @@ import {
 } from '@react-navigation/stack';
 import SignInScreen from '../screens/SignInScreen';
 import SignUpScreen from '../screens/SignUpScreen';
-import VerifyScreen from '../screens/VerifyScreen';
+import { VerifyScreen } from '../screens/VerifyScreen';
 import { ForgottenPasswordScreen } from '../screens/ForgottenPasswordScreen';
 import {ChangePasswordScreen} from '../screens/ChangePasswordScreen';
 
