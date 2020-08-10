@@ -1,9 +1,25 @@
 import React, { useState } from 'react';
-import { signIn, confirmSignUp } from '../services/authService';
+import { signIn, confirmSignUp,  resendSignUp} from '../services/authService';
 import { useAuthDispatch, useAuthState } from '../contexts/authContext';
 import VerifyScreenRenderer from './renderers/VerifyScreenRenderer';
 
-const SignUpScreen = ({ navigation }) => {
+const resendCode = async (email, setVerifyLoading, setVerifyError) => {
+    setVerifyLoading(true);
+    setVerifyError(null);
+    try {
+        const response = await resendSignUp(email);
+        setVerifyLoading(false);
+        return response;
+    } catch (error) {
+        setVerifyLoading(false);
+        setVerifyError(error.message);
+        console.log(error.message);
+    }
+
+
+}
+
+const VerifyScreen = ({ navigation }) => {
     const dispatch = useAuthDispatch();
     const context = useAuthState();
     const [verifyLoading, setVerifyLoading] = useState(false);
@@ -12,7 +28,7 @@ const SignUpScreen = ({ navigation }) => {
 
     const confirm = () => {
         setVerifyLoading(true);
-        setVerifyError(false);
+        setVerifyError(null);
         confirmSignUp(context.email, code)
             .then(() => {
                 setVerifyLoading(false);
@@ -28,12 +44,13 @@ const SignUpScreen = ({ navigation }) => {
             })
             .catch((err) => {
                 setVerifyLoading(false);
-                setVerifyError(true);
+                setVerifyError(err.message);
                 console.log(err);
             });
     };
 
     const handleResendCode = () => {
+        resendCode(context.email, setVerifyLoading, setVerifyError);
 
     }
 
@@ -56,4 +73,4 @@ const SignUpScreen = ({ navigation }) => {
 
 
 
-export default SignUpScreen;
+export { VerifyScreen, resendCode} ;

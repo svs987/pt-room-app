@@ -24,6 +24,6 @@ import VerifyScreenRenderer from './VerifyScreenRenderer';
         email=""
         signUpUser={()=>{}}
         handleResendCode={()=>{}}
-        verifyError={true} />
+        verifyError='There is an error' />
     )).toMatchSnapshot();
   });

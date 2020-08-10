@@ -55,15 +55,31 @@ const forgotPassword = async (email) => {
     try {
         const response = await Auth.forgotPassword(email);
         return response;
-      } catch (error) {
+    } catch (error) {
         throw new Error(error.message);
-      }
+    }
+}
+
+const forgotPasswordSubmit = async (email, code, password) => {
+    try {
+        const response = await Auth.forgotPasswordSubmit(email, code, password);
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
     }
 
-    const forgotPasswordSubmit = () => {
-        return;
+}
+
+const resendSignUp = async (email) => {
+    try {
+        const response = await Auth.resendSignUp(email);
+        return response;
+    } catch (error) {
+        throw new Error(error.message);
     }
-    
+
+}
 
 
-export { signIn, signOut, checkAuth, signUp, confirmSignUp, forgotPassword, forgotPasswordSubmit };
+
+export { signIn, signOut, checkAuth, signUp, confirmSignUp, forgotPassword, forgotPasswordSubmit, resendSignUp };

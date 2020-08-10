@@ -8,6 +8,7 @@ const VerifyScreenRenderer = (props) => {
         <View style={styles.container}>
                 <View>
                     <Text style={styles.text}>Nearly done! We've sent you a verification code via e-mail. Please check your e-mail and enter the code in the box</Text>
+                    <View style={styles.paragraph}>
                     <TextInput
                         style={styles.inputbox}
                         placeholder="Verification code"
@@ -16,7 +17,8 @@ const VerifyScreenRenderer = (props) => {
                         keyboardType="default"
                         autoCapitalize="none"
                     />
-                               {props.verifyError ? <Text style={styles.error}>Could not verify you. Please check code and network connection and try again.</Text> : null}
+                    </View>
+                               {props.verifyError ? <Text style={styles.error}>Could not verify you. {props.verifyError}</Text> : null}
                   <Button
                         loading={props.verifyLoading}
                         disabled={props.verifyLoading}
