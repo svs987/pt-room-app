@@ -7,5 +7,6 @@ module.exports = {
   // ..
   moduleNameMapper: {
     '^react-native$': 'react-native-web',
+    'expo-constants': '<rootDir>/mock-expo-constants.js'
   }
 }
