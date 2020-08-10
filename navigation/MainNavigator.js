@@ -1,9 +1,9 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Button } from 'react-native';
 import HomeScreen from '../screens/HomeScreen';
 import FindACoachFormScreen from '../screens/FindACoachFormScreen';
-import SplashScreen from '../screens/SplashScreen'
-import { TrainingProgrammeProvider, useTrainingProgrammeState } from '../contexts/trainingProgrammeContext';
+import { TrainingProgrammeProvider } from '../contexts/trainingProgrammeContext';
 
 const Stack = createStackNavigator();
 
@@ -35,6 +35,14 @@ const MainNavigator = () => {
             headerTitleStyle: {
               fontWeight: 'bold',
             },
+/*            headerLeft: () => (
+              <Button
+                onPress={() => alert('This is a button!')}
+                title="Info"
+                color="#fff"
+              />
+            ), */
+  
           }} />
       </Stack.Navigator>
     </TrainingProgrammeProvider>

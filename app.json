@@ -22,6 +22,6 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "description": "Connects lifters with coaches. Now with improved sign in and sign up journeys"
+    "description": "Connects lifters with coaches. Now with improved sign in and sign up journeys. New version auto updates the training page."
   }
 }
